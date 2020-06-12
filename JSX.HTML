@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.js"></script>
+</head>
+
+<body>
+
+    JSX(javascript and XML) ，他是 JavaScrip 的一种扩展语法，让 JavaScript 语言能够支持这种直接在 JavaScript 代码里面编写类似 HTML 标签结构的语法。
+    <hr>
+    通过 babel 编译 会把类似 HTML 的 JSX 结构转换成 JavaScript 的对象结构。JSX 可能会让你想起某种模板语言，但是它具有 JavaScrip 的全部能力。
+    <hr>
+    JSX 只是调用 React.createElement(component, props, ...children) 的语法糖。 但是更加便捷。
+    <hr>
+    所谓的 JSX 其实就是 JavaScript 对象，
+    <p></p>
+
+    1. 在 JSX 中嵌入表达式
+    <pre>
+            const name = 'word';
+            const element = <h1>Hello, {name}</h1>;
+
+            ReactDOM.render(element,document.getElementById('app'));
+        </pre>
+    在 JSX 语法中，你可以在大括号内放置任何有效的 JavaScript 表达式。
+    可以是`变量`,`字符串`,`数组`,`函数调用`。
+
+    + 基础类型 变量表达式，常用的三种：字符串，数字，布尔值的声明。以及对它们的操作都可以。
+
+    + 函数调用， 函数必须要有 返回值。
+
+
+
+
+    <div id="app"></div>
+
+    <script crossorigin type="text/babel">
+        //             let str = 'word';
+        //             let a = 10;
+        //             let boolean = true;
+        //             const element = (
+        //                 <h1>
+        //                     String: {str}, 
+        //                     NUmber: {a}, 
+        //                     Boolean:{boolean.toString()},
+        //                     add: {a + 10}
+        //                     toUpper: {str.toUpperCase()},
+        //                     三元表达式: {boolean?'哈哈':'可惜'}
+        //                 </h1>
+        //             );
+        //              ReactDOM.render(element,document.getElementById('app'));
+
+
+
+        //         function formatName(user) {
+        //             return user.firstName + ' ' + user.lastName;
+        //         }
+
+        //         const user = {
+        //             firstName: 'Harper',
+        //             lastName: 'Perez'
+        //         };
+        //         let arr=[1,2,3]
+        //         const element = (
+        //         <h1>
+        //             Hello, {formatName(user)}!{arr}
+        //         </h1>
+        //         );
+
+        //         ReactDOM.render(element,document.getElementById('app'));
+
+        // let url = './apple.jpg'
+        // const element = (
+        //     <div className='wrapper'>
+        //         <img  src={url}  id='greeting' className='apple' />
+        //         <label htmlFor="foo"></label>
+        //     </div>
+        // );
+        // ReactDOM.render(element,document.getElementById('app'));
+
+
+        let arr = [
+            { id: 1, name: '华生' },
+            { id: 2, name: '诸葛' },
+            { id: 3, name: '潜龙' },
+        ];
+        const element = (
+            <ul>{
+                function arrayList(arr) {
+                    let list = [];
+                    arr.forEach(item => {
+                        list.push(<li key={item.id}>id:{item.id} -- name: {item.name}</li>);
+                    });
+                    return list;
+                }(arr)} </ul>
+        );
+        ReactDOM.render(element, document.getElementById('app'));
+
+
+    </script>
+
+
+</body>
+
+</html>

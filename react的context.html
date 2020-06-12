@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/prop-types/15.7.2/prop-types.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script  type="text/javascript" src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    
+</head>
+<body>
+    <div id="app"></div>
+    //prop-types 的context
+    <!-- <script type="text/babel">
+    class Tog extends React.Component{
+        static contextTypes = {
+            handClick: PropTypes.func,
+            theme: PropTypes.string,
+            
+        }
+        render() {
+            console.log(this);
+            return (
+                <div>
+                    <h2 style={{color:this.context.theme}} 
+                    onClick={()=>{this.context.handClick('green')}}>标题变色</h2>
+                    <Button></Button>
+                </div>
+            )
+        }
+    }
+    class Button extends React.Component{
+        // 声明需要使用的Context属性
+        static contextTypes = {
+            msg: PropTypes.string,
+            handClick: PropTypes.func,
+            theme: PropTypes.string,
+        }
+        render() {
+            
+            return (
+                <button style={{color:this.context.theme}} 
+                    onClick={()=>{this.context.handClick('red')}}
+                >{this.context.msg}</button>
+            )
+        }
+    }
+    class App extends React.Component{
+        constructor(props) {
+            super(props);
+
+            this.state ={
+                theme: '',
+            }
+        }
+         // 声明Context对象属性
+        static childContextTypes = {
+            msg: PropTypes.string,
+            handClick: PropTypes.func,
+            theme: PropTypes.string,
+        }
+        
+        // 返回Context对象，方法名是约定好的
+        getChildContext () {
+            return {
+                msg: '点击变色', 
+                theme: this.state.theme,
+                handClick: (c) => {
+                    this.setState({
+                        theme: c
+                    })
+                },
+               
+            }
+        }
+        render = () =>{
+           console.log(this);
+            return (
+                <div>
+                    <Tog />
+                </div>
+            )
+        }
+        
+    }
+    ReactDOM.render(<App />,document.getElementById('app'))
+    </script> -->
+
+    <script type="text/babel">
+    const Context = React.createContext({
+        msg: '点击变色', 
+      
+        handClick: (c) => {
+            this.setState({
+                theme: c
+            })
+        },
+    })
+    </script>
+</body>
+</html>

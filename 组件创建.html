@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script  type="text/javascript" src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <script src="https://cdn.bootcss.com/styled-components/5.1.0/styled-components-macro.cjs.min.js"></script>
+</head>
+<body>
+    React推出后，出于不同的原因先后出现三种定义react组件的方式，殊途同归；具体的三种方式：
+
+        1.函数式定义的无状态组件
+        2.es5原生方式React.createClass定义的组件
+        3. es6形式的extends React.Component定义的组件
+
+    <div id="app"></div>
+    <script crossorigin type="text/babel" >
+
+// prop
+    // let data = {
+    //     name:"Sebastian",
+    //      title:'title',
+    //      date:'01-01'
+    // }
+    // let app = document.querySelector('#app')
+    // function HelloComponent(props) {
+    //     console.log(props);
+    // return <div>Hello -- {props.name}  --{props.title} --- {props.date}</div>
+    // }
+    // ReactDOM.render(<HelloComponent {...data}/>,  app) 
+
+
+
+//state 和 ref
+    // class Welcome extends React.Component {
+    //     constructor(props) {
+    //         super(props); // 获取组件上的 属性
+    //         console.log(this);
+    //         this.state = {title: "are you ok"};
+
+    //         this.second = null;
+
+    //         this.one = React.createRef();
+    //         console.log(this.one);
+    //     }
+    //     componentDidMount(){
+
+    //         // React.createRef
+    //         console.log(this.one.current);
+    //         // <input value="one" />
+
+    //         this.one.current.focus();
+
+    //         // 获取 callback ref 
+    //         console.log(this.second);
+    //         //<input value="second" />
+
+    //         // 获取 string ref 
+    //         console.log(this.refs.third);
+    //         // <input type="text" ref= 'textInput'/>
+    //     }
+    //     render() {
+    //         return <h1>
+    //                 Hello, {this.state.title} 
+
+              
+
+    //                 {/* callback ref */}
+    //                 <input value="one" ref={this.one} />     
+                     
+
+    //                 {/* callback ref */}
+    //                 <input value="second" ref={(input) => {this.second = input }} />
+                    
+    //                 {/* string ref */}
+    //                 <input value="third" ref='third' />
+    //             </h1>;
+    //     }
+      
+    // }
+    // ReactDOM.render(<Welcome name='Word' />,  app) ;
+
+// 事件绑定
+    // class Hellow extends React.Component {
+    //     constructor(props) {
+    //         super(props);
+    //         this.handClick = this.handClick.bind(this);
+    //     }
+    //     handClick(e) {
+    //         e.preventDefault();
+    //         console.log(e);
+    //     }
+
+    //     handClickTwo() {
+    //         console.log('hello');
+    //     }
+    //     handClickThird() {
+    //         console.log('hello');
+    //     }
+    //     handClickDate(arg) {
+    //         // bind 隐式 传递的事件对象 e 
+    //         console.log(arg);
+    //     }
+    //     handClickDateTwo(e,...arg) {
+    //         // 显示传递的 e
+    //         console.log(e); // [ [1], 10]
+    //     }
+
+    //     // 此语法确保 `handleClick` 内的 `this` 已被绑定。
+    //     // 注意: 这是 *实验性* 语法。
+    //     handleClickFour = () => {
+    //         console.log('this is:', this);
+    //     }
+
+    //     render(){
+    //          return <div>
+
+    //             1. 在构造函数中绑定 this
+    //             <button onClick={this.handClick}>点我</button>
+
+    //             2. 运行时绑定 this
+    //             <button onClick={this.handClickTwo.bind(this)}>点我</button>
+
+    //             3. 箭头函数 绑定 this 
+    //             <button onClick={() => this.handClickThird()}>点我</button>
+
+    //             4. JS 实验性的 class fields 语法
+    //             <button onClick={this.handleClickFour}>点我</button>
+
+    //             5, 传递参数
+    //             <button onClick={this.handClickDate.bind(this,[1],10)} />
+    //             <button onClick={ (e)=>{this.handClickDateTwo(e,5)}}/>
+    //                 </div>
+    //     }
+    // }
+    // ReactDOM.render(<Hellow name='Word' />,  app) ;
+
+
+// setState
+
+    // class LikeButton extends React.Component{
+    //     constructor(props) {
+    //         super();
+    //         this.state = {
+            
+    //             isLink : false,
+
+    //             asynCount: 0,
+    //             count: 0,
+
+    //         }
+            
+    //     }
+    //     static defaultProps  = {
+            
+    //     }
+        
+        
+    //     asyncHandClick() {
+
+        
+    //         this.setState({
+    //             isLink :!this.state.isLink,
+    //             asynCount: this.state.asynCount + 1,
+    //         });
+    //         console.log("1:"+this.state.asynCount);
+
+        
+    //         this.setState({
+    //             asynCount: this.state.asynCount+2,
+    //         },()=>{
+    //             console.log("2:"+this.state.asynCount);
+    //             this.setState({
+    //                 asynCount: this.state.asynCount+10,
+    //             });
+    //             console.log("3:"+this.state.asynCount);
+    //         })
+    //         console.log( "4:"+ this.state.asynCount);
+            
+    //         this.setState({
+    //             asynCount: this.state.asynCount+6,
+    //         },()=>{
+    //             this.setState({
+    //                 asynCount: this.state.asynCount+20,
+    //             });
+    //             console.log("7:"+this.state.asynCount);
+    //         });
+    //         console.log( "5:"+ this.state.asynCount);
+
+    
+    //     }
+        
+    //     handClick() {
+    //         this.setState((state,prop)=>{
+    //             state.count++;
+    //             console.log(state.count,prop);
+    //             return {count:state.count};
+    //         })
+    //         this.setState((state,prop)=>{
+    //             state.count++;
+            
+    //             return state;
+    //         })
+    //         console.log(this.state);
+    //     }
+    //     render(){
+    //          return <div>
+    //                 <button onClick={this.asyncHandClick.bind(this)}>
+    //                    异步 {this.state.isLink ? '' : '👍'} 
+    //                 </button>
+    //                 <p>{this.state.asynCount}</p>
+    //                 <hr />
+    //                 <button onClick={this.handClick.bind(this)}>
+    //                    同步{this.state.isLink ? '（￣︶￣）↗　' : ''} 
+    //                 </button>
+    //                 <p>{this.state.count}</p>
+
+    //          </div>
+    //     }
+    // }
+
+
+// state ++  自身问题
+class Button extends React.Component{
+        constructor(props) {
+            super();
+            this.state = {
+                asynCount: 0,
+                count:0,
+            }
+            
+        }
+        fooClick() {
+            this.setState({
+                count: this.state.count ++,
+            },()=>{
+                console.log('1:'+ this.state.count+':'+this.state.count)   
+            }); 
+            // this.setState({
+            //     count: this.state.count ++,
+            // },()=>{
+            //     console.log( '2:'+this.state.count+':'+this.state.count)   
+            // });
+            // this.setState({
+            //     count: this.state.count ++,
+            // },()=>{
+            //     console.log( '3:'+this.state.count+':'+this.state.count)   
+            // });
+          
+            // this.setState((state)=>{
+            //    state.count ++;
+            //    return state;
+            // })
+            // console.log( this.state.count+':'+this.state.count)   
+        }
+        
+        render(){
+             return <div>
+                    <button onClick={this.fooClick.bind(this)}> 点击
+                    </button>
+                    <p>{this.state.count}</p>
+             </div>
+        }
+    }
+
+
+ ReactDOM.render(<Button name='button'/>,  app) ;
+    </script>
+</body>
+</html>

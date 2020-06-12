@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/redux/4.0.5/redux.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script  type="text/javascript" src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.js"></script>
+</head>
+<!-- <style>
+    .wra{
+        display: flex;
+        justify-content: center;
+        height: 50px;
+        width:100px;
+        border-radius: 50%;
+        background-color: #fff;
+        transform: translateX(300px);
+    }
+    .wra .left{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 5px solid transparent;
+        border-top: 5px solid #000;
+        border-right: 5px solid #000;
+        transform: translateX(50%) rotate(-225deg); 
+         animation: lrotate  3s cubic-bezier(.93, 1.32, .89, 1.15)  infinite;
+         animation-direction: 3s; 
+    }
+     .wra .right{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 5px solid transparent;
+        border-top: 5px solid #000;
+        border-left: 5px solid #000;
+        transform: translateX(-50%) rotate(225deg);
+        animation: rrotate  3s cubic-bezier(.93, 1.32, .89, 1.15) infinite; 
+    } 
+    .mask-left,.mask-right{
+    
+        overflow: hidden;
+        
+    }
+    .mask-left{
+      
+    }
+    .mask-right{
+       
+    }
+     @keyframes rrotate {
+        0%{
+            transform: translateX(-50%) rotate(225deg);
+        }
+        100%{
+            transform: translateX(-50%) rotate(45deg);
+        }
+    }
+    @keyframes lrotate {
+        0%{
+        transform :translateX(50%) rotate(-225deg);
+        }
+        50%,100%{
+            transform :translateX(50%) rotate(-45deg);
+        }
+        
+    } 
+</style> -->
+<style>
+    .wra{
+        display: flex;;
+    }
+    .mask-left,.mask-right{
+        position: relative;
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+    }
+    .left{
+        position: absolute;
+        right: -25px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 5px solid transparent;
+        border-top: 5px solid #000;
+        border-right: 5px solid #000;
+        transform: rotate(45deg);  
+        
+        animation:lrotate 3s linear  infinite;
+
+        
+    }
+    @keyframes lrotate {
+        0%{
+        transform : rotate(45deg);
+        }
+        50%{
+            transform : rotate(45deg);
+        }
+        100%{
+            transform : rotate(225deg);
+        }
+    } 
+    .right{
+        position: absolute;
+       left: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 5px solid transparent;
+        border-top: 5px solid #000;
+        border-left: 5px solid #000;
+        transform: rotate(-45deg);  
+        animation:rrotate 3s linear infinite;
+    }
+    @keyframes rrotate {
+        0%{
+            transform: translateX(-50%) rotate(-45deg);
+            border-color: linear-gradient(to right, #00a853, #F04134),
+                linear-gradient(to right, #00a853, #F04134),
+                linear-gradient(to right, #00a853, #F04134)
+                linear-gradient(to right, #00a853, #F04134);
+        }
+        50%,100%{
+            transform: translateX(-50%) rotate(135deg);
+        }
+    }
+</style>
+
+<style>
+     .state{
+        display:flex;
+        justify-content: center;
+        /* position: relative;
+        left: 50%;
+        top:20px;
+        transform: translate(-50%,-50%); */
+        margin:  30px auto ;
+     }
+    .state > div{
+        display:flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 0 10px;
+        border: 1px solid #eeeeee;
+        margin: 0 10px;
+    }
+    .state > div div{
+        font-size: 20px;
+        text-transform: capitalize;
+    }
+    .state > div span{
+        padding: 0 10px;
+    }
+</style>
+<body>
+    <div class="wra">
+        <div class="mask-left">
+           
+            <div class="left"></div>
+        </div> 
+       
+        <div class="mask-right">
+            <div class="right"></div>
+        </div>
+
+    </div>
+    <div id="app"></div>
+    <script type='text/babel'>
+         const {useState,useEffect,useContext} = React;
+         const BASE_URL = "https://corona.lmao.ninja/v2";
+    </script>
+    <!-- <script type='text/babel'>
+        function App() {
+            const [global,setglobal] = useState();
+            useEffect(
+                ()=>{
+                    const fetchGlobalStats = async ()=>{
+                        let data = await fetch(`${BASE_URL}/all`).then(res => res.json());
+                        let res = await data;
+                        setglobal(res);
+                    }
+                    fetchGlobalStats();
+                    const id = setInterval(() => {
+                        fetchGlobalStats();
+                    }, 50000);
+                    return ()=>clearInterval(id);
+                },[]);
+            return (
+                <div style={{textAlign:'center'}}>
+                    <h1> COVID-19</h1> 
+                    <GetTime></GetTime>
+                    <GlobalStats {...global}></GlobalStats>
+                </div>
+            )
+        }
+        function GetTime() {
+            const [time,settime] = useState();
+            useEffect(
+                ()=>{
+                    setInterval(() => {
+                        settime(new Date().toTimeString())
+                    });
+                }
+            )
+            return <div>{time}</div>
+        }
+        function GlobalStats(props) {
+            console.log(props);
+            return (
+                <div className='state' > 
+                   <div >
+                        <div>Cases : </div>
+                        <Span color='red' number={props.cases}></Span>
+                   </div>
+                   <div >
+                        <div  >deaths : </div>
+                        <Span number={props.deaths} color='gray'></Span>
+                   </div>
+                   <div >
+                        <div >recovered : </div>
+                        <Span number={props.recovered} color='green'></Span>
+                   </div>
+                   <div >
+                        <div >active : </div>
+                        <Span number={props.active} color='orange'></Span>
+                   </div>
+                </div>
+            )
+        }
+        function Span(props){
+            return <span style={{color:props.color}}>{props.number}</span>
+        }
+        ReactDOM.render(< App />,document.querySelector("#app"))
+    </script> -->
+    <script type='text/babel'>
+    // context api
+    let data = {
+        time: new Date(),
+        age: 26
+    }
+    const MyContext = React.createContext(data); 
+    class Button extends React.Component{
+        render(){
+            return (
+                <div>
+                    <Span></Span>
+                    <Buttontwo></Buttontwo>
+                </div>
+                
+        )}
+    }
+    class Span extends React.Component{
+        static contextType = MyContext;
+        render(){
+            return (
+            <MyContext.Consumer>
+            {
+                v =><span>{v.time.toString()}---{v.age}</span>
+            }
+              
+            </MyContext.Consumer>
+        )}
+    }
+    class MyUse extends React.Component{
+        state = {
+            time: '123',
+            age: 26
+        }
+        render(){
+            return (
+                <MyContext.Provider value={this.state}>
+                    <Button></Button>
+                    <button onClick={ ()=> this.setState({age:++this.state.age})}></button>
+                </MyContext.Provider>
+            )
+        }
+    }
+    function App() {
+        const [context,setContext] = useState(data);
+        return (
+            <MyContext.Provider >
+                <Button></Button>
+                <button onClick={ ()=> setContext({age: ++context.age})}>add</button>
+            </MyContext.Provider>
+        )
+    }
+    class Buttontwo extends React.Component{
+        static contextType = MyContext;
+        render() {
+            return (
+            <div>
+                {this.context.time}--- {this.context.age}
+            </div>
+        )}
+    }
+    ReactDOM.render(< MyUse />,document.querySelector("#app"))
+    </script>
+</body>
+</html>

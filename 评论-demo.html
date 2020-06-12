@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script  type="text/javascript" src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.js"></script>
+</head>
+<style>
+    html,body{
+        height: 100%;
+    }
+    #app{
+        margin: auto;
+        width: 400px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .info{
+        width: 300px;
+        height: 200px;
+        border: 1px solid #000;
+        padding: 30px;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+    }
+    .wrapper{
+        padding: 5px 0;
+        display: flex;
+        justify-content: flex-start;
+    }
+    label{
+        width: 50px;
+        padding: 0 10px;
+    }
+   
+    input[type='button']{
+        width: 50px;
+        border: none;
+        background: dodgerblue;
+        color: #fff;
+        padding: 5px;
+    }
+    .wrapper:nth-child(3){
+        justify-content: flex-end;
+    }
+    .list div{
+        display: flex;
+        justify-content: space-between;
+    } 
+    .list button{
+        min-width: 50px;
+    }
+   
+</style>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+    class ListInfo extends React.Component {
+        // constructor(props) {
+        //     super(props);
+        // }
+        render() {
+            if(this.props.list.length == 0) {
+                return (
+                    <p>没有评论</p>
+                )
+            }else{
+                return (
+                    <React.Fragment>
+                        <h2>评论内容：</h2>
+                        <div className='list'>
+                        {
+                            this.props.list.map(v =>
+                                <div key={v.id} style={{padding: '5px',heigh:'50px'}}>
+                                    <span>{v.userName}:   {v.text}</span>
+                                    <button className='de-bt' onClick={()=>this.props.deleteClick(v.id)}>删除</button>
+                                </div>
+                            )
+                        }
+                        </div>
+                    </React.Fragment>
+                )
+            }
+        }
+    }
+    class ComponentInp extends React.Component {
+        constructor(props) {
+            super(props)
+            this.state = {
+                userName: '',
+                text:'',
+                id:'',
+                list:{}
+            }
+        }
+        getUser(e) {
+            let val =  e.target.value
+            this.setState( (state) => {state.userName  = val;return state})
+        }
+        getText(e) {
+            let val =  e.target.value;
+            let id = Date.parse( new Date());
+            this.setState( (state) => { state.text = val; state.id = id;return state})
+        }
+        subInfo(e) {
+            e.preventDefault();
+            this.setState((state) => { 
+                state.list = {
+                    userName: this.state.userName,
+                    text: this.state.text,
+                    id: this.state.id,
+                } 
+                this.props.onSubmit(this.state.list);
+                this.setState({
+                    userName: '',
+                    text:'',
+                    id:'',
+                })
+                return state;
+            })
+           
+               
+        }
+        render(){
+            return <div >
+                <form className='info' >
+                <div className="wrapper">
+                    <label htmlFor="">用户名</label>
+                    <input style={{flex:1}} type="text" value={this.state.userName} onChange={this.getUser.bind(this)}/>
+                </div>
+                <div className="wrapper">
+                    <label htmlFor="">评论</label>
+                    <textarea  name="" id="" cols="30" rows="10" value={this.state.text} onChange={this.getText.bind(this)} ></textarea>
+                </div>
+                <div className="wrapper">
+                    <input type="button" value='提交' onClick={(e)=>this.subInfo(e)} />
+                </div>
+                </form>
+            </div>
+        }
+    }
+    class App extends React.Component{
+        constructor() {
+            super();
+            this.state = {
+                list: [],
+            }
+        }
+        handleClick(compoents){
+            this.setState((state)=>{
+               state.list.push(compoents);
+               return state;
+            })
+        }
+        deleteClick(id){
+            this.setState((state)=>{
+                state.list.splice(state.list.findIndex(v => v==id),1);return state;
+            })
+        }
+        render(){
+            return <div>
+                <ComponentInp  onSubmit={(compoents)=>this.handleClick(compoents)} />
+                <ListInfo list={this.state.list} deleteClick={(id)=> this.deleteClick(id)}/>
+
+            </div>
+        }
+    }
+     ReactDOM.render(<App/>, document.getElementById('app'))
+    </script>
+</body>
+</html>

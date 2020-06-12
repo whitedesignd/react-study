@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/redux/4.0.5/redux.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script  type="text/javascript" src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/redux-thunk/2.3.0/redux-thunk.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/react-redux/7.2.0/react-redux.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        const {createStore,combineReducers,applyMiddleware,compose} = Redux;
+        const thunk = ReduxThunk.default;
+    
+        let data = {
+            'one':{
+                msg: 'hello',
+                number:1,
+            },
+            'two': {
+                arr:[1,2,3],
+                number:1,
+            },
+           
+        }
+        let reducerOne = (state={},action) =>{
+            let data = JSON.parse(JSON.stringify(state));
+            switch (action.type) {
+                case 'ADD_NUMBER':
+                    data.number += action.number;
+                    return data;
+                case 'ADD_ARR':
+                    data.arr.push(action.number);
+                    return data;
+                case 'GET_LIST':
+                    data = {...action.list};
+                    return data;
+                default:
+                    return data;
+            }
+        }
+        let reducerTwo = (state={},action) =>{
+            let data = JSON.parse(JSON.stringify(state));
+              
+            switch (action.type) {
+                case 'ADD_STRING':
+                    data.msg += action.msg;
+                    return data;
+                case 'GET_STRING':
+                    data.msg= action.msg;
+                    return data;
+                default:
+                    return data;
+            }
+        }
+        let reducer = combineReducers({
+            'one':reducerOne,
+            'two':reducerTwo
+        })
+        const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+        const enhancer = composeEnhancers(applyMiddleware(thunk));
+        const store = createStore(reducer,data,enhancer);
+    
+      
+        function incrementIfOdd() {
+            return async (dispatch, getState) => {
+                let list = await fetch(
+                    'http://rap2.taobao.org:38080/app/mock/254619/redux-thunk'
+                    ).then(res => res.json());
+                dispatch({
+                    type: 'GET_LIST',
+                    list
+                });
+                console.log(getState());
+            }
+        }
+        const {Provider,connect} = ReactRedux;
+        </script>
+        <script type="text/babel">
+            function Bt(props) {
+                return (
+                    <div>
+                        <button onClick={props.handClick}>点击</button>
+                        <p>{props.number}</p>
+                    </div>
+                )
+            }
+            let mapState = (state,ownProps) => {
+                console.log(state);
+                return {
+                    number: state.one.number
+                }
+                
+            }
+            let mapDispatch = (dispatch,ownProps) =>{
+                return {
+                    handClick: e => dispatch({
+                        type:'ADD_NUMBER',
+                        number: 1,
+                    })
+                }
+            }
+            let Button = connect(mapState,mapDispatch)(Bt);
+
+        </script>
+        <script type="text/babel">
+        class App extends React.Component{
+            constructor(props) {
+                super(props);
+            }
+            state = {
+                num: store.getState().one.number,
+            }
+            render() {
+                return  (
+                        <Provider store = {store}>
+                            <Button name='clickButton'></Button>
+                            
+                        </Provider>
+                )
+            }
+        }
+        ReactDOM.render(  <App/>,document.getElementById('app'))
+        </script>
+    
+</body>
+</html>

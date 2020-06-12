@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script  type="text/javascript" src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.js"></script>
+</head>
+<body>
+    虚拟 DOM： 使用 js 对象的方式 来表示 DOM 和 DOM 之间的联系  
+    <div id="app"></div>
+    <script crossorigin type="text/babel">
+        // jsx 语法， 创建 虚拟 DOM 
+        var dom =  <h1>Hello World!</h1>;
+
+        /* 创建虚拟DOM 的 react 方法
+            React.createElement(type,[props],[...children]))
+
+                1.第一个参数是必填，创建 元素的类型，字符串，表示元素的名称，也就是 类似 HTML标签名称，如： ul, li
+
+                2.第二个参数是选填，是一个对象或 null， 表示 当前这个DOM 元素的属性
+
+                3. 第三个参数是选填，子节点 （包含其他虚拟 DOM 获取到的 文本子节点）
+
+        */
+        var createDOM = React.createElement('h2',{id:'react-dom',title:'虚拟dom', className:'wrap'},'这是我',dom);
+
+
+        //每个 JSX 元素只是调用 React.createElement(component, props, ...children) 的语法糖。
+
+        // 渲染 元素，到 指定容器内
+        /*
+        ReactDOM.render
+        1. 参数一： 要渲染的虚拟元素
+        2. 参数二:  指定页面的容器
+        */
+        // ReactDOM.render( dom,document.getElementById("app"));
+        ReactDOM.render( createDOM,document.getElementById("app"));
+        
+
+        </script>
+   
+</body>
+</html>

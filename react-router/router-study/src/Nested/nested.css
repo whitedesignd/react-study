@@ -1,0 +1,22 @@
+html,body,#root{
+    height: 100%;
+}
+#root .App{
+    height: 100%;
+}
+.App .left,.App .right{
+    float: left;
+}
+.left{
+    width: 200px;
+    height: 100%;
+    background-color:#0564;
+    color: yellow;
+}
+.right{
+    width: 400px;
+    height: 100%;
+}
+li{
+    list-style: none;
+}
